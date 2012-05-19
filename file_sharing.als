@@ -8,6 +8,14 @@ sig State {
 	files: Path -> lone Content
 }
 
+sig History {
+	change: State -> State
+}
+
+fact onlyOneHistory {
+	all s1, s2: State, h: History | s2 in s1.^(h.change) or s1 in s2.^(h.change)
+}
+
 pred update (s, s': State, p: Path, c': Content) {
 	all q: Path | p != q => s.files[q] = s'.files[q]
 	s'.files[p] = c'
@@ -15,6 +23,10 @@ pred update (s, s': State, p: Path, c': Content) {
 
 fact {
 	all c1, c2: Content | c1 != c2 => c1.hash != c2.hash
+}
+
+fact {
+	no h: History | all s, s': State | s' = s.(h.change) and s' = s
 }
 
 pred show {}
@@ -43,4 +55,4 @@ pred moreThanOneFile (s: State) {
 	#s.files > 2
 }
 
-run showUpdate for 4 but 2 State
+run showUpdate2 for 4 but 1 History
