@@ -28,7 +28,7 @@ pred showUpdate (s, s': State, p: Path, c': Content) {
 }
 
 pred showUpdate2 (s, s': State, p: Path, c': Content) {
-	showUpdate [s, s': State, p: Path, c': Content]
+	showUpdate [s, s', p, c']
 	everyFileHasDifferentContent [s]
 	everyFileHasDifferentContent [s']
 	moreThanOneFile [s]
