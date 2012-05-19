@@ -9,7 +9,7 @@ sig State {
 }
 
 sig History {
-	change: State -> State
+	change: State lone -> lone State
 }
 
 fact onlyOneHistory {
